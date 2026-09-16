@@ -1,7 +1,8 @@
-# syntax=docker/dockerfile:1.4
 ARG PHP_VERSION=8.5
+# ARG PHP_IMAGE=docker.m.daocloud.io/library/php
+ARG PHP_IMAGE=php
 
-FROM php:${PHP_VERSION}-cli-alpine
+FROM ${PHP_IMAGE}:${PHP_VERSION}-cli-alpine
 
 LABEL org.opencontainers.image.title="Z-BlogPHP App Pack"
 LABEL org.opencontainers.image.description="Docker image for packing Z-BlogPHP plugins and themes into ZBA files"
