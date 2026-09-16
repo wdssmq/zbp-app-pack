@@ -77,7 +77,7 @@ jobs:
           path: '.'
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: ${{ steps.pack.outputs.zba-path }}
           name: ${{ steps.pack.outputs.app-name }} v${{ steps.pack.outputs.app-version }}
