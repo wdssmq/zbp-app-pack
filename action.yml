@@ -1,0 +1,67 @@
+name: 'Z-BlogPHP App Pack'
+description: 'Pack Z-BlogPHP plugin or theme into .zba format for distribution and release'
+author: 'wdssmq'
+
+branding:
+  icon: 'package'
+  color: 'blue'
+
+inputs:
+  path:
+    description: 'Path to the Z-BlogPHP plugin or theme directory'
+    required: false
+    default: '.'
+  output:
+    description: 'Output .zba file path (default: <appId>_<version>_<modified>.zba)'
+    required: false
+    default: ''
+  gzip:
+    description: 'Whether to compress with gzip (true / false)'
+    required: false
+    default: 'true'
+  verbose:
+    description: 'Display verbose packing logs (true / false)'
+    required: false
+    default: 'false'
+
+outputs:
+  zba-path:
+    description: 'Absolute path to the generated .zba file'
+    value: ${{ steps.pack.outputs.zba-path }}
+  zba-name:
+    description: 'Filename of the generated .zba file'
+    value: ${{ steps.pack.outputs.zba-name }}
+  app-id:
+    description: 'Application ID parsed from plugin.xml or theme.xml'
+    value: ${{ steps.pack.outputs.app-id }}
+  app-name:
+    description: 'Application name parsed from xml'
+    value: ${{ steps.pack.outputs.app-name }}
+  app-version:
+    description: 'Application version parsed from xml'
+    value: ${{ steps.pack.outputs.app-version }}
+  app-type:
+    description: 'Application type (plugin or theme)'
+    value: ${{ steps.pack.outputs.app-type }}
+  app-modified:
+    description: 'Application modified date parsed from xml'
+    value: ${{ steps.pack.outputs.app-modified }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: pack
+      shell: bash
+      run: |
+        ARGS=""
+        if [ "${{ inputs.gzip }}" = "false" ]; then
+          ARGS="$ARGS --no-gzip"
+        fi
+        if [ "${{ inputs.verbose }}" = "true" ]; then
+          ARGS="$ARGS -v"
+        fi
+        if [ -n "${{ inputs.output }}" ]; then
+          ARGS="$ARGS -o \"${{ inputs.output }}\""
+        fi
+
+        eval php "\"${{ github.action_path }}/pack_zba.php\"" "\"${{ inputs.path }}\"" $ARGS
