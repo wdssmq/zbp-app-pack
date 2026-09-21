@@ -31,6 +31,7 @@ class ZbaPacker
 
     private $ignoreFiles = [
         '.DS_Store',
+        '.env',
         '.git',
         '.gitattributes',
         '.github',
@@ -40,6 +41,8 @@ class ZbaPacker
         '.idea',
         '.svn',
         '.vscode',
+        '*.key',
+        '*.pem',
         '*.zba',
         'app_update.lock',
         'Thumbs.db',
