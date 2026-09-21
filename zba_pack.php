@@ -6,7 +6,10 @@
  *   php zba_pack.php <应用目录路径> [选项]
  *
  * 选项:
- *   -o, --output <路径>   指定输出 .zba 文件路径 (默认: <应用ID>_<版本号>_<修改时间>.zba)
+ *   -o, --output <路径>   指定输出 .zba 文件路径
+ *                         完整路径：-o /tmp/my_plugin.zba (文件名固定)
+ *                         目录路径：-o /tmp/ (自动拼接 appID_version_modified.zba)
+ *                         缺省：当前目录 + 自动文件名
  *   --no-gzip            不进行 gzip 压缩 (默认输出 gzip 压缩的 .zba)
  *   -v, --verbose        显示详细打包文件列表
  *   -h, --help           显示使用说明
@@ -64,12 +67,17 @@ class ZbaPacker
             $packData = $xmlContent;
         }
 
-        if (empty($this->outputPath)) {
-            $version = (string) ($this->appData['version'] ?? '1.0');
+        $outputPath = $this->outputPath ?: getcwd();
+
+        if (is_dir($outputPath)) {
+            $version  = (string) ($this->appData['version'] ?? '1.0');
             $modified = (string) ($this->appData['modified'] ?? date('Ymd'));
             $filename = "{$this->appId}_{$version}_{$modified}.zba";
-            $this->outputPath = getcwd() . DIRECTORY_SEPARATOR . $filename;
+            $outputPath = rtrim($outputPath, '/\\');
+            $outputPath .= DIRECTORY_SEPARATOR . $filename;
         }
+
+        $this->outputPath = $outputPath;
 
         $outDir = dirname($this->outputPath);
         if (!is_dir($outDir)) {
