@@ -109,6 +109,18 @@ tests
 
 ```
 
+## 构建发布
+
+```bash
+IMAGE_NAME=wdssmq/zbp-app-pack
+SHORT_HASH=$(git rev-parse --short HEAD)
+docker build --pull -t $IMAGE_NAME:latest -t $IMAGE_NAME:$SHORT_HASH .
+
+docker push $IMAGE_NAME:latest
+docker push $IMAGE_NAME:$SHORT_HASH
+
+```
+
 ---
 
 ## 开源协议
