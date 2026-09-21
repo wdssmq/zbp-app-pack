@@ -30,20 +30,20 @@ class ZbaPacker
     private $appData = [];
 
     private $ignoreFiles = [
+        '.DS_Store',
         '.git',
+        '.gitattributes',
         '.github',
+        '.gitignore',
+        '.hg',
         '.history',
         '.idea',
-        '.vscode',
         '.svn',
-        '.hg',
-        '.DS_Store',
-        'Thumbs.db',
-        'app_update.lock',
-        '.gitignore',
-        '.gitattributes',
-        'zbignore.txt',
+        '.vscode',
         '*.zba',
+        'app_update.lock',
+        'Thumbs.db',
+        'zbignore.txt',
     ];
 
     private $dirs = [];
