@@ -97,6 +97,19 @@ jobs:
 
 ---
 
+### 示例 2：Docker 使用
+
+```shell
+docker run --rm --user "$(id -u):$(id -g)" \
+  -v "${PWD}:/workdir" \
+  -v "${PWD}/..:/workdir/output" \
+  wdssmq/zbp-app-pack . \
+  -o output/
+
+```
+
+---
+
 ## 自定义忽略规则
 
 在应用根目录下创建 `zbignore.txt`，添加不需要打包进 `.zba` 的文件或目录（支持通配符），例如：
@@ -108,6 +121,7 @@ tests
 .prettierrc
 
 ```
+---
 
 ## 构建发布
 
