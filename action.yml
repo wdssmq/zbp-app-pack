@@ -64,4 +64,4 @@ runs:
           ARGS="$ARGS -o \"${{ inputs.output }}\""
         fi
 
-        eval php "\"${{ github.action_path }}/pack_zba.php\"" "\"${{ inputs.path }}\"" $ARGS
+        eval php "\"${{ github.action_path }}/zba_pack.php\"" "\"${{ inputs.path }}\"" $ARGS

@@ -13,4 +13,4 @@ if [ "$#" -eq 0 ]; then
   set -- .
 fi
 
-exec php /usr/local/bin/pack_zba.php "$@"
+exec php /usr/local/bin/zba_pack.php "$@"

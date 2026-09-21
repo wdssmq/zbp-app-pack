@@ -3,7 +3,7 @@
  * Z-BlogPHP ZBA 打包工具 (CLI & GitHub Action 版).
  *
  * 用法:
- *   php pack_zba.php <应用目录路径> [选项]
+ *   php zba_pack.php <应用目录路径> [选项]
  *
  * 选项:
  *   -o, --output <路径>   指定输出 .zba 文件路径 (默认: <应用ID>_<版本号>_<修改时间>.zba)
@@ -121,7 +121,7 @@ class ZbaPacker
 Z-BlogPHP ZBA 打包工具 (CLI)
 
 使用方法:
-  php pack_zba.php <应用目录路径> [选项]
+  php zba_pack.php <应用目录路径> [选项]
 
 选项:
   -o, --output <文件路径>  指定输出 .zba 目标路径
@@ -130,9 +130,9 @@ Z-BlogPHP ZBA 打包工具 (CLI)
   -h, --help              显示帮助信息
 
 示例:
-  php pack_zba.php /path/to/plugin_dir
-  php pack_zba.php /path/to/plugin_dir -o /tmp/my_plugin.zba
-  php pack_zba.php /path/to/theme_dir --no-gzip
+  php zba_pack.php /path/to/plugin_dir
+  php zba_pack.php /path/to/plugin_dir -o /tmp/my_plugin.zba
+  php zba_pack.php /path/to/theme_dir --no-gzip
 
 HELP;
     }
