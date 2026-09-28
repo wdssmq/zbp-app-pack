@@ -111,18 +111,33 @@ class ZbaPacker
 
     private function exportGithubOutputs()
     {
+        $outputs = [
+            'zba-path' => $this->outputPath,
+            'zba-name' => basename($this->outputPath),
+            'app-id' => $this->appId,
+            'app-name' => (string) ($this->appData['name'] ?? ''),
+            'app-version' => (string) ($this->appData['version'] ?? ''),
+            'app-type' => $this->appType,
+            'app-modified' => (string) ($this->appData['modified'] ?? ''),
+        ];
+
+        // GitHub Actions: 追加写入 $GITHUB_OUTPUT 文件
         $githubOutput = getenv('GITHUB_OUTPUT');
         if ($githubOutput && is_file($githubOutput)) {
-            $outputs = [
-                'zba-path=' . $this->outputPath,
-                'zba-name=' . basename($this->outputPath),
-                'app-id=' . $this->appId,
-                'app-name=' . ($this->appData['name'] ?? ''),
-                'app-version=' . ($this->appData['version'] ?? ''),
-                'app-type=' . $this->appType,
-                'app-modified=' . ($this->appData['modified'] ?? ''),
-            ];
-            file_put_contents($githubOutput, implode("\n", $outputs) . "\n", FILE_APPEND);
+            $lines = [];
+            foreach ($outputs as $key => $value) {
+                $lines[] = $key . '=' . $value;
+            }
+            file_put_contents($githubOutput, implode("\n", $lines) . "\n", FILE_APPEND);
+        }
+
+        // CNB (.cnb.yml): 以 ##[set-output key=value] 输出到标准输出，配合 job/stage 的 exports 导出为环境变量
+        // 参考: https://docs.cnb.cool/zh/build/env.html
+        if (false !== getenv('CNB_REPO_SLUG') || false !== getenv('CNB_PIPELINE_ID')) {
+            foreach ($outputs as $key => $value) {
+                $value = str_replace(["\r", "\n"], ' ', $value);
+                echo '##[set-output ' . $key . '=' . $value . ']' . "\n";
+            }
         }
     }
 
