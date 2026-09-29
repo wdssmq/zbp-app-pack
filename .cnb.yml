@@ -1,0 +1,18 @@
+main:
+  push:
+    - name: docker-build-push
+      services:
+        - docker
+      stages:
+        - name: docker build
+          script: |
+            IMAGE="${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}"
+            docker build --pull \
+              -t "${IMAGE}:latest" \
+              -t "${IMAGE}:${CNB_COMMIT_SHORT}" \
+              .
+        - name: docker push
+          script: |
+            IMAGE="${CNB_DOCKER_REGISTRY}/${CNB_REPO_SLUG_LOWERCASE}"
+            docker push "${IMAGE}:latest"
+            docker push "${IMAGE}:${CNB_COMMIT_SHORT}"
