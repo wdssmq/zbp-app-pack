@@ -30,6 +30,8 @@ class ZbaPacker
     private $appData = [];
 
     private $ignoreFiles = [
+        '.cnb.yml',
+        '.cnb',
         '.DS_Store',
         '.env',
         '.git',
