@@ -110,6 +110,17 @@ docker run --rm --user "$(id -u):$(id -g)" \
 
 ---
 
+### 示例 3：在 `cnb.cool` 使用
+
+使用 `.cnb.yml` 工作流体系实现打包发布；
+
+可以使用下边的 npc 智能体协助放置配置文件和触发打包流程；
+
+> GesF-Lib/npc-zbp-pack · Cloud Native Build
+>
+> [https://cnb.cool/GesF-Lib/npc-zbp-pack](https://cnb.cool/GesF-Lib/npc-zbp-pack "GesF-Lib/npc-zbp-pack · Cloud Native Build")
+
+
 ## 自定义忽略规则
 
 在应用根目录下创建 `zbignore.txt`，添加不需要打包进 `.zba` 的文件或目录（支持通配符），例如：
